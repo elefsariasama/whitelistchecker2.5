@@ -1,16 +1,7 @@
-// ==== File: styles/globals.css ====
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply bg-black text-white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  transition: all 0.2s ease-in-out;
-}
-
-input:focus, select:focus, button:focus {
-  outline: none;
-  ring: 2px solid #ff007a;
+  font-family: 'Inter', sans-serif;
 }
