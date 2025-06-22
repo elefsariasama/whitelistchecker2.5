@@ -71,9 +71,15 @@ export default function Home() {
         )}
       </div>
 
-      <div className="absolute bottom-4 text-xs text-gray-500 text-center w-full">
-        ⚠️ For fun only. This is not an official whitelist.
-      </div>
-    </div>
+    {/* Kiri bawah: Powered by */}
+<div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-40 border border-pink-500 rounded-lg px-3 py-1 text-pink-400 shadow-md">
+  Powered by <a href="https://twitter.com/frommvenus" target="_blank" rel="noopener noreferrer" className="underline">@frommvenus</a>
+</div>
+
+{/* Kanan bawah: Disclaimer */}
+<div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-40 border border-yellow-600 text-yellow-400 rounded-lg px-3 py-1 shadow-md">
+  ⚠️ This is just for fun! Not a real Sybil detection system.
+</div>
+
   );
 }
