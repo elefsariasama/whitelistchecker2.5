@@ -29,8 +29,8 @@ export default function Home() {
           <Image
             src="/logo.png"
             alt="Logo"
-            width={80}
-            height={80}
+            width={200}
+            height={200}
             className="rounded-full"
           />
         </div>
