@@ -1,74 +1,59 @@
-// ==== File: pages/index.tsx ====
-
 import { useState } from "react";
-import Head from "next/head";
 
-function hashUsername(username: string, minute: number) {
-  const input = username + minute;
-  let hash = 0;
-  for (let i = 0; i < input.length; i++) {
-    const chr = input.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0;
-  }
-  return Math.abs(hash);
-}
+const getDecision = (username: string): "Whitelist ✅" | "Not Whitelisted ❌" => {
+  const timeSeed = Math.floor(Date.now() / 60000); // per menit
+  const combined = username + timeSeed.toString();
+  const hash = Array.from(combined).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return hash % 2 === 0 ? "Whitelist ✅" : "Not Whitelisted ❌";
+};
 
 export default function Home() {
-  const [platform, setPlatform] = useState("x");
   const [username, setUsername] = useState("");
   const [result, setResult] = useState<string | null>(null);
+  const [recentCheck, setRecentCheck] = useState<string | null>(null);
 
-  const checkWhitelist = () => {
-    const now = new Date();
-    const currentMinute = Math.floor(now.getTime() / 60000);
-    const hash = hashUsername(username.toLowerCase(), currentMinute);
-    const isWhitelisted = hash % 2 === 0;
-    setResult(isWhitelisted ? "✅ You are Whitelisted!" : "❌ Not on the List");
+  const handleCheck = () => {
+    if (!username) return;
+    const res = getDecision(username.trim().toLowerCase());
+    setResult(res);
+    setRecentCheck(username);
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4">
-      <Head>
-        <title>WhitelistChecker2.5</title>
-      </Head>
-      <div className="max-w-md w-full bg-zinc-900 p-6 rounded-2xl shadow-xl border border-pink-500">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-pink-400">WhitelistChecker2.5</h1>
-          <p className="text-sm text-gray-400">for fun only ✨</p>
-        </div>
-        <div className="flex mb-4">
-          <select
-            className="w-1/3 p-2 rounded-l-xl bg-zinc-800 border border-pink-500"
-            value={platform}
-            onChange={(e) => setPlatform(e.target.value)}
-          >
-            <option value="x">X</option>
-            <option value="discord">Discord</option>
-          </select>
-          <input
-            type="text"
-            placeholder={`Enter your ${platform} username`}
-            className="w-2/3 p-2 rounded-r-xl bg-zinc-800 border-t border-r border-b border-pink-500 text-white"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white p-4">
+      <div className="bg-gray-900 rounded-xl p-8 shadow-lg w-full max-w-md border border-pink-500">
+        <div className="text-center text-pink-500 text-3xl font-bold mb-6">WhitelistChecker 2.5</div>
+
+        <input
+          className="w-full px-4 py-2 rounded bg-black border-2 border-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 mb-4"
+          placeholder="Enter your X or Discord username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+
         <button
-          onClick={checkWhitelist}
-          className="w-full p-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition"
+          className="w-full bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold py-2 px-4 rounded hover:opacity-90 transition mb-4"
+          onClick={handleCheck}
         >
-          Check Whitelist
+          Check Whitelist Stage 2.5
         </button>
+
         {result && (
-          <div className="mt-6 text-center text-xl font-semibold text-neon">
+          <div className={`text-center font-bold text-xl mb-4 ${result.includes("✅") ? "text-green-400" : "text-red-400"}`}>
             {result}
           </div>
         )}
+
+        {recentCheck && (
+          <div className="text-sm text-gray-400 text-center">
+            Recent Check: <span className="text-white font-mono">@{recentCheck}</span>
+          </div>
+        )}
       </div>
-      <footer className="mt-10 text-sm text-gray-600">
-        Powered by <span className="text-pink-400">@frommvenus</span>
-      </footer>
-    </div>
+
+      <div className="text-gray-500 text-xs mt-6">
+        ⚠️ This is just for fun. Not a real whitelist verifier.
+      </div>
+    </main>
   );
 }
