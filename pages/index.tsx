@@ -86,7 +86,7 @@ export default function Home() {
 
       {/* Kanan bawah: Disclaimer */}
       <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-40 border border-yellow-600 text-yellow-400 rounded-lg px-3 py-1 shadow-md">
-        ⚠️ This is just for fun! Not a real Sybil detection system.
+        ⚠️ This is just for fun! Not a real Whitelist Checker system.
       </div>
     </div>
   );
