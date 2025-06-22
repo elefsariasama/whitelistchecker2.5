@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 
 const getDecision = (username: string): "✅ Whitelisted!" | "❌ Not Whitelisted" => {
@@ -22,6 +23,18 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-950 text-white flex items-center justify-center px-4">
       <div className="w-full max-w-xl bg-gray-900 bg-opacity-50 backdrop-blur-md p-8 rounded-2xl border border-pink-500 shadow-[0_0_20px_#db2777aa]">
+
+        {/* 👇 Logo di atas judul */}
+        <div className="flex justify-center mb-4">
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={80}
+            height={80}
+            className="rounded-full"
+          />
+        </div>
+
         <h1 className="text-4xl font-extrabold text-pink-400 text-center mb-6 tracking-wide animate-pulse drop-shadow">
           WhitelistChecker 2.5 🚀
         </h1>
