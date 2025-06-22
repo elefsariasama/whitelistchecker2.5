@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-const getDecision = (username: string): "Whitelist ✅" | "Not Whitelisted ❌" => {
+const getDecision = (username: string): "✅ Whitelisted!" | "❌ Not Whitelisted" => {
   const timeSeed = Math.floor(Date.now() / 60000); // per menit
   const combined = username + timeSeed.toString();
   const hash = Array.from(combined).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return hash % 2 === 0 ? "Whitelist ✅" : "Not Whitelisted ❌";
+  return hash % 2 === 0 ? "✅ Whitelisted!" : "❌ Not Whitelisted";
 };
 
 export default function Home() {
@@ -20,40 +20,47 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white p-4">
-      <div className="bg-gray-900 rounded-xl p-8 shadow-lg w-full max-w-md border border-pink-500">
-        <div className="text-center text-pink-500 text-3xl font-bold mb-6">WhitelistChecker 2.5</div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-950 text-white flex items-center justify-center px-4">
+      <div className="w-full max-w-xl bg-gray-900 bg-opacity-50 backdrop-blur-md p-8 rounded-2xl border border-pink-500 shadow-[0_0_20px_#db2777aa]">
+        <h1 className="text-4xl font-extrabold text-pink-400 text-center mb-6 tracking-wide animate-pulse drop-shadow">
+          WhitelistChecker 2.5 🚀
+        </h1>
 
         <input
-          className="w-full px-4 py-2 rounded bg-black border-2 border-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 mb-4"
-          placeholder="Enter your X or Discord username"
+          type="text"
+          placeholder="Enter your X / Discord username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          className="w-full px-5 py-3 mb-4 rounded-xl bg-black border-2 border-pink-500 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400"
         />
 
         <button
-          className="w-full bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold py-2 px-4 rounded hover:opacity-90 transition mb-4"
           onClick={handleCheck}
+          className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 text-white font-bold py-3 rounded-xl transition duration-300 ease-in-out shadow-lg hover:shadow-pink-700"
         >
-          Check Whitelist Stage 2.5
+          Check Whitelist Status
         </button>
 
         {result && (
-          <div className={`text-center font-bold text-xl mb-4 ${result.includes("✅") ? "text-green-400" : "text-red-400"}`}>
+          <div
+            className={`mt-6 text-center text-2xl font-bold ${
+              result.includes("✅") ? "text-green-400" : "text-red-400"
+            }`}
+          >
             {result}
           </div>
         )}
 
         {recentCheck && (
-          <div className="text-sm text-gray-400 text-center">
-            Recent Check: <span className="text-white font-mono">@{recentCheck}</span>
+          <div className="mt-2 text-center text-sm text-gray-400">
+            Checked: <span className="text-white font-mono">@{recentCheck}</span>
           </div>
         )}
       </div>
 
-      <div className="text-gray-500 text-xs mt-6">
-        ⚠️ This is just for fun. Not a real whitelist verifier.
+      <div className="absolute bottom-4 text-xs text-gray-500 text-center w-full">
+        ⚠️ For fun only. This is not an official whitelist.
       </div>
-    </main>
+    </div>
   );
 }
