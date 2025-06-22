@@ -1,3 +1,4 @@
+import '../styles/globals.css';
 import { useState } from "react";
 
 const getDecision = (username: string): "✅ Whitelisted!" | "❌ Not Whitelisted" => {
